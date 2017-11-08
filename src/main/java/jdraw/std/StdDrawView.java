@@ -42,17 +42,34 @@ public final class StdDrawView extends JComponent implements DrawView {
     /** Space in pixels around the minimal bounding box of all figures. */
     private static final int BOUNDING_BOX_PADDING = 10;
 
-    /** The view's model. */
+    /**
+     * The view's model.
+     */
     private DrawModel model;
-    /** The context surrounding this view. */
+
+    /**
+     * The context surrounding this view.
+     */
     private DrawContext context;
-    /** The constrainer used in this view. */
+
+    /**
+     * The constrainer used in this view.
+     */
     private PointConstrainer constrainer;
-    /** The view's selection. */
+
+    /**
+     * The view's selection.
+     */
     private List<Figure> selection = new LinkedList<Figure>();
-    /** The handles occuring in this view. */
+
+    /**
+     * The handles occuring in this view.
+     */
     private List<FigureHandle> handles = new LinkedList<FigureHandle>();
-    /** Send changes to this listener. */
+
+    /**
+     * Send changes to this listener.
+     */
     private DrawModelListener ml;
 
     /**
