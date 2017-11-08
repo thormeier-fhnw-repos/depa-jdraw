@@ -61,7 +61,7 @@ public class Rect implements Figure {
     @Override
     public void setBounds(Point origin, Point corner) {
         rectangle.setFrameFromDiagonal(origin, corner);
-        // TODO notification of change
+        notifyAllListeners();
     }
 
     @Override
