@@ -14,6 +14,8 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
+import jdraw.figures.EllipseTool;
+import jdraw.figures.LineTool;
 import jdraw.figures.RectTool;
 import jdraw.framework.DrawCommandHandler;
 import jdraw.framework.DrawModel;
@@ -162,9 +164,13 @@ public class StdContext extends AbstractContext {
 
     @Override
     protected void doRegisterDrawTools() {
-        // TODO Add new figure tools here
         DrawTool rectangleTool = new RectTool(this);
+        DrawTool ellipseTool = new EllipseTool(this);
+        DrawTool lineTool = new LineTool(this);
+
         addTool(rectangleTool);
+        addTool(ellipseTool);
+        addTool(lineTool);
     }
 
     /**
