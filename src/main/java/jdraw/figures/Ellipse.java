@@ -6,16 +6,12 @@
 package jdraw.figures;
 
 import jdraw.framework.Figure;
-import jdraw.framework.FigureEvent;
 import jdraw.framework.FigureHandle;
-import jdraw.framework.FigureListener;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,16 +20,11 @@ import java.util.List;
  * @author Christoph Denzler
  *
  */
-public class Ellipse implements Figure {
+public class Ellipse extends AbstractFigure {
     /**
      * Use the java.awt.Ellipse2D in order to save/reuse code.
      */
     private Ellipse2D ellipse2D;
-
-    /**
-     * List of all FigureListeners registered on this rect
-     */
-    private ArrayList<FigureListener> figureListeners = new ArrayList<>();
 
     /**
      * Create a new ellipse2D of the given dimension.
@@ -98,30 +89,5 @@ public class Ellipse implements Figure {
     @Override
     public List<FigureHandle> getHandles() {
         return null;
-    }
-
-    @Override
-    public void addFigureListener(FigureListener listener) {
-        figureListeners.add(listener);
-    }
-
-    @Override
-    public void removeFigureListener(FigureListener listener) {
-        figureListeners.remove(listener);
-    }
-
-    @Override
-    public Figure clone() {
-        return null;
-    }
-
-    /**
-     * Notifies all FigureListeners
-     */
-    private void notifyAllListeners() {
-        // Copy listeners to avoid concurrent modification
-        ArrayList<FigureListener> listenersCopy = new ArrayList<>(figureListeners);
-
-        listenersCopy.forEach(figureListener -> figureListener.figureChanged(new FigureEvent(this)));
     }
 }

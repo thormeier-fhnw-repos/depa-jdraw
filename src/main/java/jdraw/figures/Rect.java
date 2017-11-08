@@ -9,14 +9,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
-
 import jdraw.framework.Figure;
-import jdraw.framework.FigureEvent;
 import jdraw.framework.FigureHandle;
-import jdraw.framework.FigureListener;
 
 /**
  * Represents rectangles in JDraw.
@@ -24,16 +19,11 @@ import jdraw.framework.FigureListener;
  * @author Christoph Denzler
  *
  */
-public class Rect implements Figure {
+public class Rect extends AbstractFigure {
     /**
      * Use the java.awt.Rectangle in order to save/reuse code.
      */
     private java.awt.Rectangle rectangle;
-
-    /**
-     * List of all FigureListeners registered on this rect
-     */
-    private ArrayList<FigureListener> figureListeners = new ArrayList<>();
 
     /**
      * Create a new rectangle of the given dimension.
@@ -92,30 +82,5 @@ public class Rect implements Figure {
     @Override
     public List<FigureHandle> getHandles() {
         return null;
-    }
-
-    @Override
-    public void addFigureListener(FigureListener listener) {
-        figureListeners.add(listener);
-    }
-
-    @Override
-    public void removeFigureListener(FigureListener listener) {
-        figureListeners.remove(listener);
-    }
-
-    @Override
-    public Figure clone() {
-        return null;
-    }
-
-    /**
-     * Notifies all FigureListeners
-     */
-    private void notifyAllListeners() {
-        // Copy listeners to avoid concurrent modification
-        ArrayList<FigureListener> listenersCopy = new ArrayList<>(figureListeners);
-
-        listenersCopy.forEach(figureListener -> figureListener.figureChanged(new FigureEvent(this)));
     }
 }

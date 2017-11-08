@@ -1,32 +1,10 @@
 package jdraw.figures;
 
 import jdraw.framework.DrawContext;
-import jdraw.framework.DrawTool;
-import jdraw.framework.DrawView;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
-public class LineTool implements DrawTool {
-
-    /**
-     * the image resource path.
-     */
-    private static final String IMAGES = "/images/";
-
-    /**
-     * The context we use for drawing.
-     */
-    private DrawContext context;
-
-    /**
-     * The context's view. This variable can be used as a shortcut, i.e.
-     * instead of calling context.getView().
-     */
-    private DrawView view;
+public class LineTool extends AbstractDrawTool {
 
     /**
      * Temporary variable. During rectangle creation (during a
@@ -36,39 +14,11 @@ public class LineTool implements DrawTool {
     private Line newLine = null;
 
     /**
-     * Temporary variable.
-     * During rectangle creation this variable refers to the point the
-     * mouse was first pressed.
-     */
-    private Point anchor = null;
-
-    /**
      * Create a new rectangle tool for the given context.
      * @param context a context to use this tool in.
      */
     public LineTool(DrawContext context) {
-        this.context = context;
-        this.view = context.getView();
-    }
-
-    /**
-     * Deactivates the current mode by resetting the cursor
-     * and clearing the status bar.
-     * @see jdraw.framework.DrawTool#deactivate()
-     */
-    @Override
-    public void deactivate() {
-        this.context.showStatusText("");
-    }
-
-    /**
-     * Activates the Rectangle Mode. There will be a
-     * specific menu added to the menu bar that provides settings for
-     * Rectangle attributes
-     */
-    @Override
-    public void activate() {
-        this.context.showStatusText("Line Mode");
+        super(context);
     }
 
     /**
@@ -124,21 +74,16 @@ public class LineTool implements DrawTool {
     public void mouseUp(int x, int y, MouseEvent e) {
         newLine = null;
         anchor = null;
-        this.context.showStatusText("Rectangle Mode");
-    }
-
-    @Override
-    public Cursor getCursor() {
-        return Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR);
-    }
-
-    @Override
-    public Icon getIcon() {
-        return new ImageIcon(getClass().getResource(IMAGES + "line.png"));
+        this.context.showStatusText("Line Mode");
     }
 
     @Override
     public String getName() {
         return "Line";
+    }
+
+    @Override
+    public String getIconName() {
+        return "line.png";
     }
 }

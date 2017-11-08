@@ -1,26 +1,17 @@
 package jdraw.figures;
 
 import jdraw.framework.Figure;
-import jdraw.framework.FigureEvent;
 import jdraw.framework.FigureHandle;
-import jdraw.framework.FigureListener;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Line2D;
-import java.util.ArrayList;
 import java.util.List;
 
-public class Line implements Figure {
+public class Line extends AbstractFigure {
 
     private Line2D line;
-
-    /**
-     * List of all FigureListeners registered on this rect
-     */
-    private ArrayList<FigureListener> figureListeners = new ArrayList<>();
 
     public Line(int x1, int y1, int x2, int y2) {
         line = new Line2D.Float(x1, y1, x2, y2);
@@ -89,30 +80,5 @@ public class Line implements Figure {
     @Override
     public List<FigureHandle> getHandles() {
         return null;
-    }
-
-    @Override
-    public void addFigureListener(FigureListener listener) {
-        figureListeners.add(listener);
-    }
-
-    @Override
-    public void removeFigureListener(FigureListener listener) {
-        figureListeners.remove(listener);
-    }
-
-    @Override
-    public Figure clone() {
-        return null;
-    }
-
-    /**
-     * Notifies all FigureListeners
-     */
-    private void notifyAllListeners() {
-        // Copy listeners to avoid concurrent modification
-        ArrayList<FigureListener> listenersCopy = new ArrayList<>(figureListeners);
-
-        listenersCopy.forEach(figureListener -> figureListener.figureChanged(new FigureEvent(this)));
     }
 }

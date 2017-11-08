@@ -22,24 +22,7 @@ import java.awt.event.MouseEvent;
  *
  * @author  Christoph Denzler
  */
-public class EllipseTool implements DrawTool {
-
-    /**
-     * the image resource path.
-     */
-    private static final String IMAGES = "/images/";
-
-    /**
-     * The context we use for drawing.
-     */
-    private DrawContext context;
-
-    /**
-     * The context's view. This variable can be used as a shortcut, i.e.
-     * instead of calling context.getView().
-     */
-    private DrawView view;
-
+public class EllipseTool extends AbstractDrawTool {
     /**
      * Temporary variable. During rectangle creation (during a
      * mouse down - mouse drag - mouse up cycle) this variable refers
@@ -48,39 +31,12 @@ public class EllipseTool implements DrawTool {
     private Ellipse newEllipse = null;
 
     /**
-     * Temporary variable.
-     * During rectangle creation this variable refers to the point the
-     * mouse was first pressed.
-     */
-    private Point anchor = null;
-
-    /**
      * Create a new rectangle tool for the given context.
+     *
      * @param context a context to use this tool in.
      */
     public EllipseTool(DrawContext context) {
-        this.context = context;
-        this.view = context.getView();
-    }
-
-    /**
-     * Deactivates the current mode by resetting the cursor
-     * and clearing the status bar.
-     * @see DrawTool#deactivate()
-     */
-    @Override
-    public void deactivate() {
-        this.context.showStatusText("");
-    }
-
-    /**
-     * Activates the Rectangle Mode. There will be a
-     * specific menu added to the menu bar that provides settings for
-     * Rectangle attributes
-     */
-    @Override
-    public void activate() {
-        this.context.showStatusText("Ellipse Mode");
+        super(context);
     }
 
     /**
@@ -118,7 +74,7 @@ public class EllipseTool implements DrawTool {
     public void mouseDrag(int x, int y, MouseEvent e) {
         newEllipse.setBounds(anchor, new Point(x, y));
         java.awt.Rectangle r = newEllipse.getBounds();
-        this.context.showStatusText("w: " + r.width + ", h: " + r.height);
+        context.showStatusText("w: " + r.width + ", h: " + r.height);
     }
 
     /**
@@ -136,17 +92,7 @@ public class EllipseTool implements DrawTool {
     public void mouseUp(int x, int y, MouseEvent e) {
         newEllipse = null;
         anchor = null;
-        this.context.showStatusText("Rectangle Mode");
-    }
-
-    @Override
-    public Cursor getCursor() {
-        return Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR);
-    }
-
-    @Override
-    public Icon getIcon() {
-        return new ImageIcon(getClass().getResource(IMAGES + "oval.png"));
+        this.context.showStatusText("Ellipse Mode");
     }
 
     @Override
@@ -154,4 +100,6 @@ public class EllipseTool implements DrawTool {
         return "Ellipse";
     }
 
+    @Override
+    public String getIconName() { return "oval.png"; }
 }

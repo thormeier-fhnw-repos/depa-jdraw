@@ -5,16 +5,9 @@
 
 package jdraw.figures;
 
-import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-
 import jdraw.framework.DrawContext;
-import jdraw.framework.DrawTool;
-import jdraw.framework.DrawView;
 
 /**
  * This tool defines a mode for drawing rectangles.
@@ -23,23 +16,7 @@ import jdraw.framework.DrawView;
  *
  * @author  Christoph Denzler
  */
-public class RectTool implements DrawTool {
-  
-    /**
-     * the image resource path.
-     */
-    private static final String IMAGES = "/images/";
-
-    /**
-     * The context we use for drawing.
-     */
-    private DrawContext context;
-
-    /**
-     * The context's view. This variable can be used as a shortcut, i.e.
-     * instead of calling context.getView().
-     */
-    private DrawView view;
+public class RectTool extends AbstractDrawTool {
 
     /**
      * Temporary variable. During rectangle creation (during a
@@ -49,39 +26,11 @@ public class RectTool implements DrawTool {
     private Rect newRect = null;
 
     /**
-     * Temporary variable.
-     * During rectangle creation this variable refers to the point the
-     * mouse was first pressed.
-     */
-    private Point anchor = null;
-
-    /**
      * Create a new rectangle tool for the given context.
      * @param context a context to use this tool in.
      */
     public RectTool(DrawContext context) {
-        this.context = context;
-        this.view = context.getView();
-    }
-
-    /**
-     * Deactivates the current mode by resetting the cursor
-     * and clearing the status bar.
-     * @see jdraw.framework.DrawTool#deactivate()
-     */
-    @Override
-    public void deactivate() {
-        this.context.showStatusText("");
-    }
-
-    /**
-     * Activates the Rectangle Mode. There will be a
-     * specific menu added to the menu bar that provides settings for
-     * Rectangle attributes
-     */
-    @Override
-    public void activate() {
-        this.context.showStatusText("Rectangle Mode");
+        super(context);
     }
 
     /**
@@ -141,18 +90,13 @@ public class RectTool implements DrawTool {
     }
 
     @Override
-    public Cursor getCursor() {
-        return Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR);
-    }
-
-    @Override
-    public Icon getIcon() {
-        return new ImageIcon(getClass().getResource(IMAGES + "rectangle.png"));
-    }
-
-    @Override
     public String getName() {
         return "Rectangle";
+    }
+
+    @Override
+    public String getIconName() {
+        return "rectangle.png";
     }
 
 }
