@@ -17,10 +17,10 @@ import java.util.EventListener;
  */
 public interface FigureListener extends EventListener {
 
-	/**
-	 * Sent when a figure has changed.
-	 * 
-	 * @param e figure event
-	 */
-	void figureChanged(FigureEvent e);
+    /**
+     * Sent when a figure has changed.
+     *
+     * @param e figure event
+     */
+    void figureChanged(FigureEvent e);
 }

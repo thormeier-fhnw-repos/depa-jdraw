@@ -13,11 +13,11 @@ package jdraw.framework;
  * @version 2.5
  */
 public interface FigureGroup {
-	
-	/**
-	 * Returns the parts of a figure which consists of several parts.
-	 * 
-	 * @return parts of a figure
-	 */
-	Iterable<Figure> getFigureParts();
+
+    /**
+     * Returns the parts of a figure which consists of several parts.
+     *
+     * @return parts of a figure
+     */
+    Iterable<Figure> getFigureParts();
 }

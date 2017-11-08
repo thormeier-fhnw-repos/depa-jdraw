@@ -23,73 +23,73 @@ package jdraw.framework;
  */
 public interface DrawContext {
 
-	/**
-	 * Returns the context's drawing view.
-	 * 
-	 * @return the draw view controlled by this context
-	 */
-	DrawView getView();
+    /**
+     * Returns the context's drawing view.
+     *
+     * @return the draw view controlled by this context
+     */
+    DrawView getView();
 
-	/**
-	 * Returns the draw model presented by this context's view. Returns the same
-	 * result as getView().getModel().
-	 * 
-	 * @return the draw model presented by this context's view.
-	 */
-	DrawModel getModel();
-	
-	/**
-	 * Shows a status message in the context's user interface.
-	 * 
-	 * @param msg the status message to be displayed
-	 */
-	void showStatusText(String msg);
+    /**
+     * Returns the draw model presented by this context's view. Returns the same
+     * result as getView().getModel().
+     *
+     * @return the draw model presented by this context's view.
+     */
+    DrawModel getModel();
 
-	/**
-	 * Adds a menu in the editor's user interface.
-	 * 
-	 * @param menu the menu to be added
-	 */
-	void addMenu(javax.swing.JMenu menu);
+    /**
+     * Shows a status message in the context's user interface.
+     *
+     * @param msg the status message to be displayed
+     */
+    void showStatusText(String msg);
 
-	/**
-	 * Removes a menu in the editor's user interface.
-	 * 
-	 * @param menu the menu to be removed
-	 */
-	void removeMenu(javax.swing.JMenu menu);
+    /**
+     * Adds a menu in the editor's user interface.
+     *
+     * @param menu the menu to be added
+     */
+    void addMenu(javax.swing.JMenu menu);
 
-	/**
-	 * Adds a draw tool to the editor's capabilities. An editor has a list of
-	 * tools that are available to the user. This list must guarantee that any
-	 * tool is contained only once in the list.
-	 * 
-	 * @param tool a new draw tool to add to the editor.
-	 */
-	void addTool(DrawTool tool);
+    /**
+     * Removes a menu in the editor's user interface.
+     *
+     * @param menu the menu to be removed
+     */
+    void removeMenu(javax.swing.JMenu menu);
 
-	/**
-	 * Returns the currently active tool.
-	 * 
-	 * @return active tool
-	 */
-	DrawTool getTool();
+    /**
+     * Adds a draw tool to the editor's capabilities. An editor has a list of
+     * tools that are available to the user. This list must guarantee that any
+     * tool is contained only once in the list.
+     *
+     * @param tool a new draw tool to add to the editor.
+     */
+    void addTool(DrawTool tool);
 
-	/**
-	 * Sets the tool to be used.
-	 * 
-	 * @param tool tool to be used by the draw view
-	 */
-	void setTool(DrawTool tool);
+    /**
+     * Returns the currently active tool.
+     *
+     * @return active tool
+     */
+    DrawTool getTool();
 
-	/**
-	 * Sets the default tool (selection and moving of figures).
-	 */
-	void setDefaultTool();
+    /**
+     * Sets the tool to be used.
+     *
+     * @param tool tool to be used by the draw view
+     */
+    void setTool(DrawTool tool);
 
-	/**
-	 * Make the view visible.
-	 */
-	void showView();
+    /**
+     * Sets the default tool (selection and moving of figures).
+     */
+    void setDefaultTool();
+
+    /**
+     * Make the view visible.
+     */
+    void showView();
 
 }

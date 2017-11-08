@@ -5,8 +5,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	DrawModelTest.class,
-	RectangleTest.class
+    DrawModelTest.class,
+    RectangleTest.class
 })
 public class JDrawTests {
 }

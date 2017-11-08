@@ -17,27 +17,27 @@ import jdraw.framework.DrawCommandHandler;
  */
 public class EmptyDrawCommandHandler implements DrawCommandHandler {
 
-	@Override
-	public void addCommand(DrawCommand cmd) { /* do nothing. */ }
-	
-	@Override
-	public void undo() { /* do nothing. */ }
+    @Override
+    public void addCommand(DrawCommand cmd) { /* do nothing. */ }
 
-	@Override
-	public void redo() { /* do nothing. */ }
+    @Override
+    public void undo() { /* do nothing. */ }
 
-	@Override
-	public boolean undoPossible() { return false; }
+    @Override
+    public void redo() { /* do nothing. */ }
 
-	@Override
-	public boolean redoPossible() { return false; }
+    @Override
+    public boolean undoPossible() { return false; }
 
-	@Override
-	public void beginScript() { /* do nothing. */ }
+    @Override
+    public boolean redoPossible() { return false; }
 
-	@Override
-	public void endScript() { /* do nothing. */ }
+    @Override
+    public void beginScript() { /* do nothing. */ }
 
-	@Override
-	public void clearHistory() { /* do nothing. */ }
+    @Override
+    public void endScript() { /* do nothing. */ }
+
+    @Override
+    public void clearHistory() { /* do nothing. */ }
 }

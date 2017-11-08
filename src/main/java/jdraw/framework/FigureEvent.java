@@ -18,21 +18,21 @@ import java.util.EventObject;
 @SuppressWarnings("serial")
 public class FigureEvent extends EventObject {
 
-	/**
-	 * Constructs a FigureEvent object with the specified figure.
-	 * 
-	 * @param source figure which changed
-	 */
-	public FigureEvent(Figure source) {
-		super(source);
-	}
+    /**
+     * Constructs a FigureEvent object with the specified figure.
+     *
+     * @param source figure which changed
+     */
+    public FigureEvent(Figure source) {
+        super(source);
+    }
 
-	/**
-	 * Returns the figure which changed.
-	 * 
-	 * @return changed figure
-	 */
-	public Figure getFigure() {
-		return (Figure)getSource();
-	}
+    /**
+     * Returns the figure which changed.
+     *
+     * @return changed figure
+     */
+    public Figure getFigure() {
+        return (Figure)getSource();
+    }
 }

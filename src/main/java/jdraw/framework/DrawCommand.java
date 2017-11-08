@@ -18,15 +18,15 @@ import java.io.Serializable;
  */
 
 public interface DrawCommand extends Serializable {
-	
-	/**
-	 * Executes a command.
-	 */
-	void redo();
 
-	/**
-	 * Undoes the action performed by execute. 
-	 */
-	void undo();
+    /**
+     * Executes a command.
+     */
+    void redo();
+
+    /**
+     * Undoes the action performed by execute.
+     */
+    void undo();
 }
 

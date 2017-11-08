@@ -15,10 +15,10 @@ import java.util.EventListener;
  */
 public interface DrawModelListener extends EventListener {
 
-	/**
-	 * Sent when a draw model has changed.
-	 * 
-	 * @param e draw model event
-	 */
-	void modelChanged(DrawModelEvent e);
+    /**
+     * Sent when a draw model has changed.
+     *
+     * @param e draw model event
+     */
+    void modelChanged(DrawModelEvent e);
 }

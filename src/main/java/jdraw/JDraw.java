@@ -33,52 +33,52 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public final class JDraw {
 
-	/** Default xml configuration file for Spring. */
-	private static final String DEFAULT_CONTEXT = "jdraw-context.xml";
+    /** Default xml configuration file for Spring. */
+    private static final String DEFAULT_CONTEXT = "jdraw-context.xml";
 
-	/** Selected xml configuration file for Spring. */
-	private static String springContext = DEFAULT_CONTEXT;
+    /** Selected xml configuration file for Spring. */
+    private static String springContext = DEFAULT_CONTEXT;
 
-	/** Application context of Spring. */
-	private static ClassPathXmlApplicationContext ctx;
-	
-	/**
-	 * Starts the JDraw application. Usage: <br>
-	 * <code>jdraw [config]</code> where config is an XML file that the Spring
-	 * framework uses for its setup.
-	 * 
-	 * @param args any command line argument. See usage above.
-	 */
-	public static void main(final String[] args) {
-		BasicConfigurator.configure(); 	// configure log4j according to a
-										// log4j.properties file found in
-										// classpath
+    /** Application context of Spring. */
+    private static ClassPathXmlApplicationContext ctx;
 
-		if (args.length > 0) {
-			springContext = args[0];
-		}
+    /**
+     * Starts the JDraw application. Usage: <br>
+     * <code>jdraw [config]</code> where config is an XML file that the Spring
+     * framework uses for its setup.
+     *
+     * @param args any command line argument. See usage above.
+     */
+    public static void main(final String[] args) {
+        BasicConfigurator.configure();     // configure log4j according to a
+                                        // log4j.properties file found in
+                                        // classpath
 
-		DrawContext drawContext = getContext();
-		drawContext.showView();
-	}
+        if (args.length > 0) {
+            springContext = args[0];
+        }
 
-	/**
-	 * Private constructor prevents the instantiation of this class.
-	 */
-	private JDraw() {
-		// prevent instantiation.
-	}
+        DrawContext drawContext = getContext();
+        drawContext.showView();
+    }
 
-	/**
-	 * Get an interface which represents the context.
-	 * 
-	 * @return a DrawContext implementation
-	 */
-	public static DrawContext getContext() {
-		if (ctx == null) {
-			ctx = new ClassPathXmlApplicationContext(springContext);
-		}
-		return (DrawContext) ctx.getBean("drawContext");
-	}
+    /**
+     * Private constructor prevents the instantiation of this class.
+     */
+    private JDraw() {
+        // prevent instantiation.
+    }
+
+    /**
+     * Get an interface which represents the context.
+     *
+     * @return a DrawContext implementation
+     */
+    public static DrawContext getContext() {
+        if (ctx == null) {
+            ctx = new ClassPathXmlApplicationContext(springContext);
+        }
+        return (DrawContext) ctx.getBean("drawContext");
+    }
 
 }
