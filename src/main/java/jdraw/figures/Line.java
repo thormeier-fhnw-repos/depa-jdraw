@@ -1,5 +1,7 @@
 package jdraw.figures;
 
+import jdraw.figures.handles.line.LineEndHandle;
+import jdraw.figures.handles.line.LineStartHandle;
 import jdraw.framework.Figure;
 import jdraw.framework.FigureHandle;
 import java.awt.Color;
@@ -7,6 +9,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Line2D;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Line extends AbstractFigure {
@@ -30,7 +33,7 @@ public class Line extends AbstractFigure {
 
     @Override
     public void move(int dx, int dy) {
-        line = new Line2D.Float(
+        line.setLine(
             (float) line.getX1() + dx,
             (float) line.getY1() + dy,
             (float) line.getX2() + dx,
@@ -79,6 +82,25 @@ public class Line extends AbstractFigure {
      */
     @Override
     public List<FigureHandle> getHandles() {
-        return null;
+        List<FigureHandle> handles = new ArrayList<>();
+
+        handles.add(new LineStartHandle(this));
+        handles.add(new LineEndHandle(this));
+
+        return handles;
+    }
+
+    public Point getP1() {
+        return new Point(
+            (int) line.getP1().getX(),
+            (int) line.getP1().getY()
+        );
+    }
+
+    public Point getP2() {
+        return new Point(
+            (int) line.getP2().getX(),
+            (int) line.getP2().getY()
+        );
     }
 }

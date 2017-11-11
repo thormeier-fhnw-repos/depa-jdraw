@@ -5,6 +5,10 @@
 
 package jdraw.figures;
 
+import jdraw.figures.handles.cardinalDirection.EastHandle;
+import jdraw.figures.handles.cardinalDirection.NorthHandle;
+import jdraw.figures.handles.cardinalDirection.SouthHandle;
+import jdraw.figures.handles.cardinalDirection.WestHandle;
 import jdraw.framework.Figure;
 import jdraw.framework.FigureHandle;
 import java.awt.Color;
@@ -12,6 +16,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -88,6 +93,13 @@ public class Ellipse extends AbstractFigure {
      */
     @Override
     public List<FigureHandle> getHandles() {
-        return null;
+        List<FigureHandle> handles = new ArrayList<>();
+
+        handles.add(new NorthHandle(this));
+        handles.add(new EastHandle(this));
+        handles.add(new SouthHandle(this));
+        handles.add(new WestHandle(this));
+
+        return handles;
     }
 }

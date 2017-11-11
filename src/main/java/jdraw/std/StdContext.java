@@ -23,6 +23,9 @@ import jdraw.framework.DrawTool;
 import jdraw.framework.DrawToolFactory;
 import jdraw.framework.DrawView;
 import jdraw.framework.Figure;
+import jdraw.grid.Grid30;
+import jdraw.grid.SimpleGrid;
+import jdraw.grid.SnapGrid;
 
 /**
  * Standard implementation of interface DrawContext.
@@ -117,22 +120,29 @@ public class StdContext extends AbstractContext {
 
         JMenu orderMenu = new JMenu("Order...");
         JMenuItem frontItem = new JMenuItem("Bring To Front");
-        frontItem.addActionListener(e -> {
-            bringToFront(getView().getModel(), getView().getSelection());
-        });
+        frontItem.addActionListener(e -> bringToFront(getView().getModel(), getView().getSelection()));
         orderMenu.add(frontItem);
         JMenuItem backItem = new JMenuItem("Send To Back");
-        backItem.addActionListener(e -> {
-            sendToBack(getView().getModel(), getView().getSelection());
-        });
+        backItem.addActionListener(e -> sendToBack(getView().getModel(), getView().getSelection()));
         orderMenu.add(backItem);
         editMenu.add(orderMenu);
 
-        JMenu grid = new JMenu("Grid...");
-        grid.add("Grid 1");
-        grid.add("Grid 2");
-        grid.add("Grid 3");
-        editMenu.add(grid);
+        JMenu gridMenu = new JMenu("Grid...");
+
+        JMenuItem noGridItem = new JMenuItem("No grid");
+        noGridItem.addActionListener(e -> getView().setConstrainer(new SimpleGrid()));
+
+        JMenuItem grid30Item = new JMenuItem("30");
+        grid30Item.addActionListener(e -> getView().setConstrainer(new Grid30()));
+
+        JMenuItem gridSnapItem = new JMenuItem("Snap");
+        gridSnapItem.addActionListener(e -> getView().setConstrainer(new SnapGrid(getView())));
+
+        gridMenu.add(noGridItem);
+        gridMenu.add(grid30Item);
+        gridMenu.add(gridSnapItem);
+
+        editMenu.add(gridMenu);
 
         return editMenu;
     }

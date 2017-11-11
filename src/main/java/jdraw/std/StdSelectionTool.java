@@ -142,8 +142,11 @@ public class StdSelectionTool implements DrawTool {
             // 4. if dragging mouse for spanning a selection, remember starting position (sx0, sy0) and initialize
             //    current position (sx1, sy1).
             if (lastSelectedFigure == null && !e.isShiftDown()) {
-                sx0 = originalX; sy0 = originalY;
-                sx1 = originalX; sy1 = originalY;
+                sx0 = originalX;
+                sy0 = originalY;
+                sx1 = originalX;
+                sy1 = originalY;
+
                 selMode = true;
             }
         }

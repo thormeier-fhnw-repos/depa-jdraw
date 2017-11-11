@@ -9,8 +9,17 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.List;
-import jdraw.framework.Figure;
+
+import jdraw.figures.handles.cardinalDirection.EastHandle;
+import jdraw.figures.handles.cardinalDirection.NorthEastHandle;
+import jdraw.figures.handles.cardinalDirection.NorthHandle;
+import jdraw.figures.handles.cardinalDirection.NorthWestHandle;
+import jdraw.figures.handles.cardinalDirection.SouthEastHandle;
+import jdraw.figures.handles.cardinalDirection.SouthHandle;
+import jdraw.figures.handles.cardinalDirection.SouthWestHandle;
+import jdraw.figures.handles.cardinalDirection.WestHandle;
 import jdraw.framework.FigureHandle;
 
 /**
@@ -81,6 +90,17 @@ public class Rect extends AbstractFigure {
      */
     @Override
     public List<FigureHandle> getHandles() {
-        return null;
+        List<FigureHandle> handles = new ArrayList<>();
+
+        handles.add(new NorthWestHandle(this));
+        handles.add(new NorthHandle(this));
+        handles.add(new NorthEastHandle(this));
+        handles.add(new EastHandle(this));
+        handles.add(new SouthEastHandle(this));
+        handles.add(new SouthHandle(this));
+        handles.add(new SouthWestHandle(this));
+        handles.add(new WestHandle(this));
+
+        return handles;
     }
 }
