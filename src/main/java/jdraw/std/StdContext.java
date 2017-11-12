@@ -5,6 +5,10 @@
 package jdraw.std;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -41,6 +45,7 @@ public class StdContext extends AbstractContext {
 
     private List<Figure> clipboard;
     private int numberOfPastes = 0;
+    private String saveFilePath = "./saveFiles";
 
     /**
      * Constructs a standard context with a default set of drawing tools.
@@ -254,7 +259,7 @@ public class StdContext extends AbstractContext {
     public void bringToFront(DrawModel model, List<Figure> selection) {
         // the figures in the selection are ordered according to the order in
         // the model
-        List<Figure> orderedSelection = new LinkedList<Figure>();
+        List<Figure> orderedSelection = new LinkedList<>();
         int pos = 0;
         for (Figure f : model.getFigures()) {
             pos++;
@@ -276,7 +281,7 @@ public class StdContext extends AbstractContext {
     public void sendToBack(DrawModel model, List<Figure> selection) {
         // the figures in the selection are ordered according to the order in
         // the model
-        List<Figure> orderedSelection = new LinkedList<Figure>();
+        List<Figure> orderedSelection = new LinkedList<>();
         for (Figure f : model.getFigures()) {
             if (selection.contains(f)) {
                 orderedSelection.add(f);
@@ -292,8 +297,7 @@ public class StdContext extends AbstractContext {
      * Handles the saving of a drawing to a file.
      */
     private void doSave() {
-        JFileChooser chooser = new JFileChooser(getClass().getResource("")
-                .getFile());
+        JFileChooser chooser = new JFileChooser(saveFilePath);
         chooser.setDialogTitle("Save Graphic");
         chooser.setDialogType(JFileChooser.SAVE_DIALOG);
         FileFilter filter = new FileFilter() {
@@ -316,7 +320,21 @@ public class StdContext extends AbstractContext {
             if (chooser.getFileFilter() == filter && !filter.accept(file)) {
                 file = new File(chooser.getCurrentDirectory(), file.getName() + ".draw");
             }
+
             System.out.println("save current graphic to file " + file.getName());
+
+            List<Figure> saveFigures = new LinkedList<>();
+            getModel().getFigures().forEach(figure -> saveFigures.add(figure.clone()));
+
+            try {
+                FileOutputStream fileOut = new FileOutputStream(file.getAbsolutePath());
+                ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                out.writeObject(saveFigures);
+                out.close();
+                fileOut.close();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
@@ -324,8 +342,7 @@ public class StdContext extends AbstractContext {
      * Handles the opening of a new drawing from a file.
      */
     private void doOpen() {
-        JFileChooser chooser = new JFileChooser(getClass().getResource("")
-                .getFile());
+        JFileChooser chooser = new JFileChooser(saveFilePath);
         chooser.setDialogTitle("Open Graphic");
         chooser.setDialogType(JFileChooser.OPEN_DIALOG);
         chooser.setFileFilter(new javax.swing.filechooser.FileFilter() {
@@ -345,6 +362,19 @@ public class StdContext extends AbstractContext {
             // read jdraw graphic
             System.out.println("read file "
                     + chooser.getSelectedFile().getName());
+
+            try {
+                FileInputStream fileIn = new FileInputStream(chooser.getSelectedFile().getAbsolutePath());
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                List<Figure> loadedFigures = (LinkedList<Figure>) in.readObject();
+                in.close();
+                fileIn.close();
+
+                getModel().removeAllFigures();
+                loadedFigures.forEach(figure -> getModel().addFigure(figure));
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 

@@ -2,3 +2,4 @@
 .gradle/
 .settings/
 out/
+saveFiles/*.draw
