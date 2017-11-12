@@ -20,6 +20,7 @@ import jdraw.figures.handles.cardinalDirection.SouthEastHandle;
 import jdraw.figures.handles.cardinalDirection.SouthHandle;
 import jdraw.figures.handles.cardinalDirection.SouthWestHandle;
 import jdraw.figures.handles.cardinalDirection.WestHandle;
+import jdraw.framework.Figure;
 import jdraw.framework.FigureHandle;
 
 /**
@@ -43,6 +44,21 @@ public class Rect extends AbstractFigure {
      */
     public Rect(int x, int y, int w, int h) {
         rectangle = new java.awt.Rectangle(x, y, w, h);
+    }
+
+    /**
+     * Copy constructor
+     * @param old
+     */
+    public Rect(Rect old) {
+        Rectangle bounds = old.getBounds();
+
+        rectangle = new Rectangle(
+            bounds.x,
+            bounds.y,
+            bounds.width,
+            bounds.height
+        );
     }
 
     /**
@@ -102,5 +118,10 @@ public class Rect extends AbstractFigure {
         handles.add(new WestHandle(this));
 
         return handles;
+    }
+
+    @Override
+    public Figure clone() {
+        return new Rect(this);
     }
 }

@@ -60,12 +60,12 @@ public final class StdDrawView extends JComponent implements DrawView {
     /**
      * The view's selection.
      */
-    private List<Figure> selection = new LinkedList<Figure>();
+    private List<Figure> selection = new LinkedList<>();
 
     /**
      * The handles occuring in this view.
      */
-    private List<FigureHandle> handles = new LinkedList<FigureHandle>();
+    private List<FigureHandle> handles = new LinkedList<>();
 
     /**
      * Send changes to this listener.
@@ -203,7 +203,7 @@ public final class StdDrawView extends JComponent implements DrawView {
     // =========
     @Override
     public List<Figure> getSelection() {
-        return new LinkedList<Figure>(selection);
+        return new LinkedList<>(selection);
     }
 
     @Override

@@ -43,6 +43,21 @@ public class Ellipse extends AbstractFigure {
     }
 
     /**
+     * Copy constructor
+     * @param old
+     */
+    public Ellipse(Ellipse old) {
+        Rectangle bounds = old.getBounds();
+
+        ellipse2D = new Ellipse2D.Float(
+            bounds.x,
+            bounds.y,
+            bounds.width,
+            bounds.height
+        );
+    }
+
+    /**
      * Draw the ellipse2D to the given graphics context.
      * @param g the graphics context to use for drawing.
      */
@@ -101,5 +116,10 @@ public class Ellipse extends AbstractFigure {
         handles.add(new WestHandle(this));
 
         return handles;
+    }
+
+    @Override
+    public Figure clone() {
+        return new Ellipse(this);
     }
 }

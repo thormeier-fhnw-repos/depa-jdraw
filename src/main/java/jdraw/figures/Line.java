@@ -20,6 +20,19 @@ public class Line extends AbstractFigure {
         line = new Line2D.Float(x1, y1, x2, y2);
     }
 
+    /**
+     * Copy constructor
+     * @param old
+     */
+    public Line(Line old) {
+        line = new Line2D.Float(
+            (float) old.line.getX1(),
+            (float) old.line.getY1(),
+            (float) old.line.getX2(),
+            (float) old.line.getY2()
+        );
+    }
+
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.BLACK);
@@ -102,5 +115,10 @@ public class Line extends AbstractFigure {
             (int) line.getP2().getX(),
             (int) line.getP2().getY()
         );
+    }
+
+    @Override
+    public Figure clone() {
+        return new Line(this);
     }
 }

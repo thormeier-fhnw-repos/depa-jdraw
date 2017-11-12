@@ -7,6 +7,7 @@ package jdraw.std;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
@@ -15,6 +16,7 @@ import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
 import jdraw.figures.EllipseTool;
+import jdraw.figures.Group;
 import jdraw.figures.LineTool;
 import jdraw.figures.RectTool;
 import jdraw.framework.DrawCommandHandler;
@@ -23,6 +25,7 @@ import jdraw.framework.DrawTool;
 import jdraw.framework.DrawToolFactory;
 import jdraw.framework.DrawView;
 import jdraw.framework.Figure;
+import jdraw.framework.FigureGroup;
 import jdraw.grid.Grid30;
 import jdraw.grid.SimpleGrid;
 import jdraw.grid.SnapGrid;
@@ -36,11 +39,14 @@ import jdraw.grid.SnapGrid;
  */
 public class StdContext extends AbstractContext {
 
+    private List<Figure> clipboard;
+    private int numberOfPastes = 0;
+
     /**
      * Constructs a standard context with a default set of drawing tools.
      * @param view the view that is displaying the actual drawing.
      */
-  public StdContext(DrawView view) {
+    public StdContext(DrawView view) {
         super(view, null);
     }
 
@@ -96,9 +102,44 @@ public class StdContext extends AbstractContext {
         );
 
         editMenu.addSeparator();
-        editMenu.add("Cut").setEnabled(false);
-        editMenu.add("Copy").setEnabled(false);
-        editMenu.add("Paste").setEnabled(false);
+        JMenuItem cutItem = new JMenuItem("Cut");
+        cutItem.setAccelerator(KeyStroke.getKeyStroke("control X"));
+        cutItem.addActionListener(e -> {
+            clipboard = new LinkedList<>();
+            getView().getSelection().forEach(figure -> {
+                getModel().removeFigure(figure);
+                clipboard.add(figure.clone());
+            });
+            numberOfPastes = 0;
+        });
+        editMenu.add(cutItem);
+
+        JMenuItem copyItem = new JMenuItem("Copy");
+        copyItem.setAccelerator(KeyStroke.getKeyStroke("control C"));
+        copyItem.addActionListener(e -> {
+            clipboard = new LinkedList<>();
+            clipboard.addAll(getView().getSelection());
+            numberOfPastes = 0;
+        });
+        editMenu.add(copyItem);
+
+        JMenuItem pasteItem = new JMenuItem("Paste");
+        pasteItem.setAccelerator(KeyStroke.getKeyStroke("control V"));
+        pasteItem.addActionListener(e -> {
+            if (null != clipboard) {
+                numberOfPastes++;
+
+                getView().clearSelection();
+                clipboard.forEach(figure -> {
+                    Figure newFigure = figure.clone();
+                    newFigure.move(5 * numberOfPastes, 5 * numberOfPastes);
+
+                    getModel().addFigure(newFigure);
+                    getView().addToSelection(newFigure);
+                });
+            }
+        });
+        editMenu.add(pasteItem);
 
         editMenu.addSeparator();
         JMenuItem clear = new JMenuItem("Clear");
@@ -109,11 +150,32 @@ public class StdContext extends AbstractContext {
 
         editMenu.addSeparator();
         JMenuItem group = new JMenuItem("Group");
-        group.setEnabled(false);
+        group.addActionListener(e -> {
+            Group groupFigure = new Group(getView().getSelection());
+
+            getModel().addFigure(groupFigure);
+            getView().getSelection().forEach(figure -> getModel().removeFigure(figure));
+
+            getView().addToSelection(groupFigure);
+        });
         editMenu.add(group);
 
         JMenuItem ungroup = new JMenuItem("Ungroup");
-        ungroup.setEnabled(false);
+        ungroup.addActionListener(e -> {
+            LinkedList<Figure> selectionCopy = new LinkedList<>(getView().getSelection());
+
+            selectionCopy.forEach(figure -> {
+                if (figure instanceof FigureGroup) {
+                    ((Group) figure).getFigureParts().forEach(figurePart -> {
+                        getModel().addFigure(figurePart);
+                        getView().addToSelection(figurePart);
+                    });
+
+                    getModel().removeFigure(figure);
+                }
+            });
+        });
+        ungroup.setEnabled(true);
         editMenu.add(ungroup);
 
         editMenu.addSeparator();
